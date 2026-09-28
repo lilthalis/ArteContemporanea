@@ -1,0 +1,200 @@
+<!Doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0f" />
+  <title>Arte, Memória e Diversidade Brasileira</title>
+  <meta name="description" content="Site interativo para TCC sobre como a arte contemporânea representa a diversidade brasileira." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f; --bg2:#12131a; --card:#171821; --text:#f6f1e7; --muted:#b9b4aa;
+      --line:rgba(255,255,255,.1); --gold:#d6a84a; --red:#a03a3a; --green:#2c7a62; --purple:#6c4eb3;
+      --shadow:0 24px 60px rgba(0,0,0,.28); --radius:24px;
+    }
+    body.light{
+      --bg:#f4efe6; --bg2:#fffaf1; --card:#fffdf7; --text:#17171b; --muted:#67645f;
+      --line:rgba(0,0,0,.1); --shadow:0 24px 60px rgba(67,51,30,.12);
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    img{display:block;max-width:100%} a{color:inherit;text-decoration:none} button{font:inherit}
+    .progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--gold),#e06c4f,var(--purple));z-index:999}
+    .nav{position:fixed;left:50%;transform:translateX(-50%);top:18px;width:min(1180px,calc(100% - 28px));z-index:100;background:color-mix(in srgb,var(--bg2) 82%, transparent);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:20px;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;box-shadow:0 10px 35px rgba(0,0,0,.13)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}.brand-mark{width:34px;height:34px;border-radius:11px;background:conic-gradient(from 40deg,var(--gold),var(--red),var(--purple),var(--green),var(--gold));box-shadow:inset 0 0 0 4px color-mix(in srgb,var(--bg) 82%, transparent)}
+    .navlinks{display:flex;gap:4px}.navlinks a{padding:10px 12px;border-radius:12px;color:var(--muted);font-size:.91rem}.navlinks a:hover,.navlinks a.active{background:var(--card);color:var(--text)}
+    .icon-btn{border:1px solid var(--line);background:var(--card);color:var(--text);width:40px;height:40px;border-radius:13px;cursor:pointer}.menu-btn{display:none}
+    .hero{min-height:100vh;display:grid;place-items:center;position:relative;padding:120px 22px 70px;isolation:isolate}
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(70px);opacity:.28;z-index:-2}.hero:before{width:420px;height:420px;background:var(--purple);top:8%;left:-120px}.hero:after{width:500px;height:500px;background:var(--gold);right:-180px;bottom:4%}
+    .hero-grid{position:absolute;inset:0;z-index:-3;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 85%);opacity:.35}
+    .hero-inner{width:min(1180px,100%);display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;color:var(--gold);background:color-mix(in srgb,var(--card) 78%, transparent);font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    h1,h2,h3{margin:0}.hero h1{font:700 clamp(3.4rem,8vw,7.7rem)/.92 "Playfair Display",serif;letter-spacing:-.055em;margin:20px 0 24px;max-width:920px}.hero h1 .accent{color:var(--gold)}
+    .lead{font-size:clamp(1.02rem,1.8vw,1.28rem);line-height:1.75;color:var(--muted);max-width:750px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{border:0;padding:14px 18px;border-radius:14px;cursor:pointer;font-weight:800;display:inline-flex;align-items:center;gap:9px}.btn.primary{background:var(--text);color:var(--bg)}.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+    .hero-art{position:relative;height:520px}.tile{position:absolute;border-radius:28px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}.tile.one{width:64%;height:72%;left:0;top:0;background:linear-gradient(145deg,#753a34,#a75f46 48%,#d4a35a)}.tile.two{width:54%;height:64%;right:0;bottom:0;background:linear-gradient(145deg,#274e47,#1f6d61 47%,#66ad8f)}.tile.three{width:38%;height:42%;right:6%;top:5%;background:linear-gradient(145deg,#43326e,#6f50ad 52%,#b676ba)}
+    .tile:after{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.27);border-radius:20px}.scribble{position:absolute;inset:0;display:grid;place-items:center;font:700 5rem/1 Playfair Display;color:rgba(255,255,255,.82);transform:rotate(-9deg)}
+    .floating-note{position:absolute;left:15%;bottom:10%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--bg2) 90%,transparent);backdrop-filter:blur(12px);font-size:.82rem;box-shadow:var(--shadow)}
+    section{padding:100px 22px}.container{width:min(1180px,100%);margin:auto}.section-head{display:grid;grid-template-columns:.7fr 1.3fr;gap:30px;align-items:end;margin-bottom:42px}.kicker{text-transform:uppercase;font-weight:800;letter-spacing:.14em;color:var(--gold);font-size:.78rem}.section-head h2{font:700 clamp(2.2rem,5vw,4.7rem)/.98 Playfair Display,serif;letter-spacing:-.04em}.section-head p{color:var(--muted);line-height:1.75;font-size:1.05rem;margin:0}
+    .topic-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.topic{grid-column:span 4;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;min-height:220px;position:relative;overflow:hidden;transition:.3s ease}.topic:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.topic.wide{grid-column:span 6}.topic .num{font:700 3rem Playfair Display;color:color-mix(in srgb,var(--gold) 58%,transparent)}.topic h3{font-size:1.18rem;margin:14px 0 10px}.topic p{color:var(--muted);line-height:1.65;margin:0}.tag{display:inline-block;margin-top:16px;padding:7px 9px;border:1px solid var(--line);border-radius:999px;font-size:.72rem;color:var(--muted)}
+    .artists{background:var(--bg2)}.artist-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}.artist-tab{border:1px solid var(--line);background:transparent;color:var(--muted);padding:10px 14px;border-radius:999px;cursor:pointer;font-weight:700}.artist-tab.active{background:var(--text);color:var(--bg)}
+    .artist-panel{display:none;grid-template-columns:1fr 1fr;gap:32px;align-items:stretch}.artist-panel.active{display:grid}.artist-image{min-height:540px;border-radius:28px;overflow:hidden;border:1px solid var(--line);position:relative;background:#222}.artist-image img{width:100%;height:100%;object-fit:cover}.artist-image .credit{position:absolute;left:14px;bottom:14px;background:rgba(0,0,0,.66);color:white;border-radius:12px;padding:8px 10px;font-size:.67rem;max-width:86%;backdrop-filter:blur(8px)}
+    .artist-info{display:flex;flex-direction:column;justify-content:center;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:34px}.artist-info h3{font:700 clamp(2rem,4vw,3.5rem) Playfair Display,serif;margin-bottom:8px}.artist-info .origin{color:var(--gold);font-weight:800;margin-bottom:24px}.fact{padding:14px 0;border-top:1px solid var(--line)}.fact b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}.fact span{line-height:1.6}.quote{margin-top:22px;padding:18px;border-left:3px solid var(--gold);background:color-mix(in srgb,var(--gold) 10%,transparent);border-radius:0 16px 16px 0;line-height:1.6}
+    .timeline{position:relative;margin-top:35px}.timeline:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}.event{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:35px 0;align-items:center}.event:nth-child(even) .event-card{grid-column:2}.event:nth-child(even) .year{grid-column:1;grid-row:1;text-align:right}.event-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}.year{font:700 2rem Playfair Display;color:var(--gold)}.event-card p{color:var(--muted);line-height:1.65;margin:.5rem 0 0}
+    .quiz-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:28px}.quiz-intro{background:linear-gradient(160deg,color-mix(in srgb,var(--purple) 50%,var(--card)),var(--card));border:1px solid var(--line);border-radius:28px;padding:34px}.quiz-intro h3{font:700 2.5rem Playfair Display;margin-bottom:14px}.quiz-intro p{color:var(--muted);line-height:1.7}.quiz-card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:28px}.question{font-size:1.25rem;font-weight:800;line-height:1.45;margin-bottom:20px}.answers{display:grid;gap:10px}.answer{border:1px solid var(--line);background:transparent;color:var(--text);text-align:left;padding:14px;border-radius:14px;cursor:pointer}.answer:hover{background:var(--bg2)}.answer.correct{border-color:#4ea97d;background:rgba(78,169,125,.12)}.answer.wrong{border-color:#c96969;background:rgba(201,105,105,.12)}.quiz-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.82rem;margin-bottom:12px}.quiz-result{display:none;text-align:center;padding:30px 0}.score{font:700 4.5rem Playfair Display;color:var(--gold)}
+    .final{position:relative;text-align:center;overflow:hidden}.final .statement{font:700 clamp(2.4rem,6vw,6rem)/1.02 Playfair Display,serif;max-width:1000px;margin:0 auto}.final p{color:var(--muted);max-width:720px;margin:24px auto;line-height:1.75}.final .chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.chip{padding:9px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+    footer{padding:36px 22px;border-top:1px solid var(--line);color:var(--muted)}footer .container{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.sources a{text-decoration:underline;text-underline-offset:3px}.source-list{margin-top:10px;display:grid;gap:4px;font-size:.82rem}
+    .reveal{opacity:0;transform:translateY(22px);transition:.7s ease}.reveal.show{opacity:1;transform:none}
+    @media(max-width:900px){.navlinks{display:none;position:absolute;top:62px;left:0;right:0;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:8px;flex-direction:column}.navlinks.open{display:flex}.menu-btn{display:inline-grid;place-items:center}.hero-inner,.section-head,.artist-panel,.quiz-wrap{grid-template-columns:1fr}.hero-art{height:390px}.topic,.topic.wide{grid-column:span 6}.section-head{align-items:start}.timeline:before{left:12px}.event{grid-template-columns:1fr;gap:10px;padding-left:36px}.event .event-card,.event:nth-child(even) .event-card,.event .year,.event:nth-child(even) .year{grid-column:1;grid-row:auto;text-align:left}.artist-image{min-height:380px}}
+    @media(max-width:620px){.hero{padding-top:105px}.hero h1{font-size:3.2rem}.topic,.topic.wide{grid-column:1/-1}.hero-art{height:320px}.tile.one{width:70%;height:70%}.tile.two{width:60%;height:58%}.nav{top:10px}.section-head h2{font-size:2.5rem}.artist-info{padding:24px}.quiz-card,.quiz-intro{padding:22px}}
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="nav">
+    <a class="brand" href="#inicio"><span class="brand-mark"></span><span>Arte Brasileira</span></a>
+    <div class="navlinks" id="navlinks">
+      <a href="#tema">Tema</a><a href="#topicos">Tópicos</a><a href="#artistas">Artistas</a><a href="#linha">Linha do tempo</a><a href="#quiz">Quiz</a>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" id="theme" aria-label="Alternar tema">◐</button>
+      <button class="icon-btn menu-btn" id="menu" aria-label="Abrir menu">☰</button>
+    </div>
+  </nav>
+
+  <header class="hero" id="inicio">
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div>
+        <span class="eyebrow">TCC • Arte Contemporânea Brasileira</span>
+        <h1>Arte, memória e <span class="accent">diversidade</span>.</h1>
+        <p class="lead">Como a arte representa a diversidade brasileira? Explore identidades, ancestralidades, culturas afro-brasileiras e indígenas por meio de uma experiência visual e interativa.</p>
+        <div class="actions"><a href="#tema" class="btn primary">Começar experiência ↓</a><a href="#artistas" class="btn ghost">Ver artistas</a></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="tile one"><div class="scribble">MEMÓRIA</div></div>
+        <div class="tile three"><div class="scribble" style="font-size:3rem">ARTE</div></div>
+        <div class="tile two"><div class="scribble" style="font-size:3.4rem">IDENTIDADE</div></div>
+        <div class="floating-note">Passe o mouse, clique e explore.</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="tema">
+    <div class="container reveal">
+      <div class="section-head">
+        <div><div class="kicker">Questão central</div><h2>Como a arte representa a diversidade brasileira?</h2></div>
+        <p>A arte contemporânea brasileira reúne diferentes origens, memórias, territórios e formas de compreender o país. Ela transforma experiências sociais em imagens, objetos, performances e instalações que preservam histórias, questionam desigualdades e ampliam as formas de representação.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="topicos" style="padding-top:20px">
+    <div class="container">
+      <div class="topic-grid">
+        <article class="topic reveal"><div class="num">01</div><h3>Características da Arte Contemporânea Brasileira</h3><p>Liberdade de técnicas, mistura de linguagens e valorização de temas sociais. Pintura, fotografia, vídeo, instalação, performance e recursos digitais convivem na mesma cena.</p><span class="tag">Pluralidade de linguagens</span></article>
+        <article class="topic reveal"><div class="num">02</div><h3>Identidade e Memória na Arte</h3><p>Objetos, fotografias e narrativas familiares tornam-se instrumentos para reconstruir histórias individuais e coletivas, inclusive aquelas apagadas dos registros oficiais.</p><span class="tag">Memória coletiva</span></article>
+        <article class="topic reveal"><div class="num">03</div><h3>Cultura Afro-Brasileira</h3><p>Ancestralidade, racismo, religiosidade, gênero e resistência aparecem como temas centrais em obras que valorizam experiências negras e afro-brasileiras.</p><span class="tag">Ancestralidade</span></article>
+        <article class="topic wide reveal"><div class="num">04</div><h3>Artistas Indígenas e suas Culturas</h3><p>Artistas indígenas unem conhecimentos ancestrais e linguagens contemporâneas. Território, natureza, cosmologia, memória e colonização aparecem em obras que mostram povos originários como sujeitos do presente.</p><span class="tag">Território e cosmologia</span></article>
+        <article class="topic wide reveal"><div class="num">05</div><h3>Arte no Combate aos Estereótipos</h3><p>A produção artística pode confrontar imagens preconceituosas e simplificadas. Quando grupos historicamente representados por outros passam a construir suas próprias narrativas, novas perspectivas ganham espaço.</p><span class="tag">Representação</span></article>
+        <article class="topic reveal"><div class="num">06</div><h3>Diversidade Cultural</h3><p>A presença de múltiplas tradições, territórios e visões de mundo mostra que a identidade brasileira não é única: ela é diversa, dinâmica e em constante transformação.</p><span class="tag">Pluralidade</span></article>
+        <article class="topic reveal"><div class="num">07</div><h3>Arte, Memória e Patrimônio</h3><p>Arte preserva saberes, costumes e símbolos, ajudando a transmitir patrimônios materiais e imateriais entre gerações.</p><span class="tag">Patrimônio cultural</span></article>
+        <article class="topic reveal"><div class="num">∞</div><h3>Uma identidade em movimento</h3><p>A diversidade brasileira não é um quadro fixo. Ela se transforma conforme novas vozes ocupam museus, ruas, universidades, bienais e espaços digitais.</p><span class="tag">Brasil contemporâneo</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="artists" id="artistas">
+    <div class="container">
+      <div class="section-head reveal"><div><div class="kicker">3 artistas</div><h2>Três olhares sobre o Brasil.</h2></div><p>Clique nos nomes para comparar linguagens, obras, referências culturais e mensagens.</p></div>
+      <div class="artist-tabs reveal">
+        <button class="artist-tab active" data-artist="rosana">Rosana Paulino</button>
+        <button class="artist-tab" data-artist="jaider">Jaider Esbell</button>
+        <button class="artist-tab" data-artist="denilson">Denilson Baniwa</button>
+      </div>
+
+      <article class="artist-panel active" id="rosana">
+        <div class="artist-image"><img src="https://storage.ghost.io/c/51/f8/51f871d8-b6be-4a73-b958-0ca4fff0110a/content/images/hyperallergic-newspack-s3-amazonaws-com/uploads/2024/06/paulino-sala-alta-8400.jpg" alt="Instalação Assentamento, de Rosana Paulino"><div class="credit">Imagem: Rosana Paulino, “Assentamento” • reprodução divulgada por Hyperallergic.</div></div>
+        <div class="artist-info"><h3>Rosana Paulino</h3><div class="origin">São Paulo, 1967</div><div class="fact"><b>Linguagem artística</b><span>Gravura, desenho, fotografia, instalação, costura e técnicas combinadas.</span></div><div class="fact"><b>Obra escolhida</b><span><em>Assentamento</em> (2013).</span></div><div class="fact"><b>Tema da obra</b><span>Memória, escravidão, identidade negra e ancestralidade.</span></div><div class="fact"><b>Elementos culturais</b><span>Fotografias históricas, tecido, costuras aparentes, raízes e referências à formação afro-brasileira.</span></div><div class="quote">A obra reconstrói visualmente corpos e histórias fragmentadas, fazendo da costura uma metáfora de memória, trauma e reconstrução.</div></div>
+      </article>
+
+      <article class="artist-panel" id="jaider">
+        <div class="artist-image"><img src="https://d7hftxdivxxvm.cloudfront.net/?height=1200&quality=85&resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2Fnzex5Igsm3mqZhvlT6fG6A%252FMAG%2BTHUMB_34BSP_Jaider-Esbell_3.jpg&width=1200" alt="Entidades, obra de Jaider Esbell"><div class="credit">Imagem: “Entidades”, Jaider Esbell • 34ª Bienal de São Paulo / divulgação Artsy.</div></div>
+        <div class="artist-info"><h3>Jaider Esbell</h3><div class="origin">Normandia, Roraima, 1979 • povo Makuxi</div><div class="fact"><b>Linguagem artística</b><span>Pintura, desenho, escrita, instalação, performance e arte indígena contemporânea.</span></div><div class="fact"><b>Obra escolhida</b><span><em>Entidades</em> (2021, 34ª Bienal de São Paulo).</span></div><div class="fact"><b>Tema da obra</b><span>Cosmologia indígena, espiritualidade, natureza e presença dos povos originários.</span></div><div class="fact"><b>Elementos culturais</b><span>Serpentes monumentais, grafismos, narrativas ancestrais e diálogo com a paisagem.</span></div><div class="quote">Ao ocupar um espaço público de grande circulação, a obra afirma que culturas indígenas são vivas, contemporâneas e produtoras de conhecimento.</div></div>
+      </article>
+
+      <article class="artist-panel" id="denilson">
+        <div class="artist-image"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/796c5577978367.5c97e896b6678.jpg" alt="Performance Pajé-Onça, de Denilson Baniwa"><div class="credit">Imagem: “Pajé-Onça: Hackeando a 33ª Bienal de Artes de São Paulo” • projeto publicado no Behance.</div></div>
+        <div class="artist-info"><h3>Denilson Baniwa</h3><div class="origin">Barcelos, Amazonas, 1984 • povo Baniwa</div><div class="fact"><b>Linguagem artística</b><span>Performance, pintura, intervenção, arte digital e instalação.</span></div><div class="fact"><b>Obra escolhida</b><span><em>Pajé-Onça Hackeando a 33ª Bienal de Artes de São Paulo</em> (2018).</span></div><div class="fact"><b>Tema da obra</b><span>Colonização, representação indígena e disputa de narrativas dentro da história da arte.</span></div><div class="fact"><b>Elementos culturais</b><span>Figura da onça, corpo em performance, referências ao pajé e à presença indígena contemporânea.</span></div><div class="quote">A performance questiona quem tem o direito de representar os povos originários e desloca a voz indígena da margem para o centro da narrativa.</div></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="linha">
+    <div class="container">
+      <div class="section-head reveal"><div><div class="kicker">Linha do tempo</div><h2>Arte que atravessa tempos.</h2></div><p>Um recorte simples para mostrar como memória, ancestralidade e contemporaneidade se conectam no trabalho dos três artistas.</p></div>
+      <div class="timeline">
+        <div class="event reveal"><div class="event-card"><strong>Rosana Paulino nasce em São Paulo</strong><p>Sua produção viria a abordar gênero, raça, memória e experiências de mulheres negras.</p></div><div class="year">1967</div></div>
+        <div class="event reveal"><div class="event-card"><strong>Jaider Esbell nasce em Roraima</strong><p>Artista Makuxi que aproximou cosmologia, ativismo e arte contemporânea.</p></div><div class="year">1979</div></div>
+        <div class="event reveal"><div class="event-card"><strong>Denilson Baniwa nasce no Amazonas</strong><p>Artista Baniwa que trabalha performance, intervenção e crítica decolonial.</p></div><div class="year">1984</div></div>
+        <div class="event reveal"><div class="event-card"><strong>Assentamento</strong><p>Rosana Paulino articula fotografia, tecido e sutura para abordar memória e ancestralidade.</p></div><div class="year">2013</div></div>
+        <div class="event reveal"><div class="event-card"><strong>Pajé-Onça</strong><p>Denilson Baniwa intervém na 33ª Bienal de São Paulo e tensiona a representação indígena na história da arte.</p></div><div class="year">2018</div></div>
+        <div class="event reveal"><div class="event-card"><strong>Entidades</strong><p>Jaider Esbell leva serpentes monumentais ao Parque Ibirapuera na 34ª Bienal.</p></div><div class="year">2021</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz" style="background:var(--bg2)">
+    <div class="container">
+      <div class="section-head reveal"><div><div class="kicker">Interatividade</div><h2>Teste o que você aprendeu.</h2></div><p>Um quiz curto para usar durante a apresentação do TCC e envolver a turma.</p></div>
+      <div class="quiz-wrap reveal">
+        <div class="quiz-intro"><h3>Quiz da diversidade</h3><p>São 5 perguntas. O resultado aparece imediatamente e você pode reiniciar quantas vezes quiser.</p><div class="chips" style="justify-content:flex-start"><span class="chip">5 perguntas</span><span class="chip">resultado imediato</span></div></div>
+        <div class="quiz-card">
+          <div id="quizGame"><div class="quiz-meta"><span id="qCount">Pergunta 1 de 5</span><span id="qScore">0 pontos</span></div><div class="question" id="question"></div><div class="answers" id="answers"></div></div>
+          <div class="quiz-result" id="result"><div class="score" id="scoreFinal">0/5</div><h3>Resultado</h3><p id="resultText" style="color:var(--muted)"></p><button class="btn primary" id="restart">Refazer quiz</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="conclusao">
+    <div class="container reveal"><div class="kicker">Conclusão</div><h2 class="statement">A diversidade brasileira aparece na arte quando diferentes histórias conquistam espaço para serem contadas por suas próprias vozes.</h2><p>Rosana Paulino, Jaider Esbell e Denilson Baniwa mostram que arte, memória e identidade podem preservar patrimônios, confrontar estereótipos e ampliar a compreensão do Brasil.</p><div class="chips"><span class="chip">memória</span><span class="chip">ancestralidade</span><span class="chip">território</span><span class="chip">identidade</span><span class="chip">diversidade</span></div></div>
+  </section>
+
+  <footer>
+    <div class="container"><div><strong style="color:var(--text)">Arte Brasileira • TCC</strong><div style="margin-top:7px">Site interativo em HTML, CSS e JavaScript.</div></div><div class="sources"><strong style="color:var(--text)">Fontes para consulta</strong><div class="source-list"><a href="https://bienal.org.br/exposicoes/34a-bienal-de-sao-paulo/" target="_blank" rel="noreferrer">Fundação Bienal de São Paulo</a><a href="https://rosanapaulino.blogspot.com/2013/11/assentamento.html" target="_blank" rel="noreferrer">Rosana Paulino — Assentamento</a><a href="https://www.behance.net/gallery/77978367/Paj-Onca-Hackeando-a-33-Bienal-de-Artes-de-Sao-Paulo" target="_blank" rel="noreferrer">Denilson Baniwa — Pajé-Onça</a></div></div></div>
+  </footer>
+
+<script>
+  const $=(s)=>document.querySelector(s), $$=(s)=>document.querySelectorAll(s);
+  const progress=$('#progress');
+  addEventListener('scroll',()=>{const h=document.documentElement;progress.style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';});
+  $('#theme').addEventListener('click',()=>{document.body.classList.toggle('light');localStorage.setItem('tccTheme',document.body.classList.contains('light')?'light':'dark')});
+  if(localStorage.getItem('tccTheme')==='light') document.body.classList.add('light');
+  $('#menu').addEventListener('click',()=>$('#navlinks').classList.toggle('open'));
+  $$('#navlinks a').forEach(a=>a.addEventListener('click',()=>$('#navlinks').classList.remove('open')));
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});$$('.reveal').forEach(x=>io.observe(x));
+  const sections=$$('section[id],header[id]');
+  const navAs=$$('#navlinks a');
+  const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -45% 0px'});sections.forEach(s=>spy.observe(s));
+
+  $$('.artist-tab').forEach(btn=>btn.addEventListener('click',()=>{ $$('.artist-tab').forEach(b=>b.classList.remove('active')); $$('.artist-panel').forEach(p=>p.classList.remove('active')); btn.classList.add('active'); $('#'+btn.dataset.artist).classList.add('active'); }));
+
+  const quiz=[
+    {q:'Qual característica combina com a arte contemporânea brasileira?',a:['Uso obrigatório apenas de pintura','Mistura de linguagens e temas sociais','Ausência de questões culturais','Reprodução apenas de modelos europeus'],c:1},
+    {q:'Em “Assentamento”, Rosana Paulino trabalha principalmente com...',a:['memória, ancestralidade e identidade negra','paisagens urbanas futuristas','arquitetura colonial','natureza-morta europeia'],c:0},
+    {q:'Jaider Esbell pertence a qual povo indígena?',a:['Baniwa','Yanomami','Makuxi','Tukano'],c:2},
+    {q:'“Pajé-Onça” é uma obra associada a qual artista?',a:['Rosana Paulino','Denilson Baniwa','Jaider Esbell','Ernesto Neto'],c:1},
+    {q:'Qual ideia resume melhor a diversidade cultural na arte?',a:['Existe uma única identidade brasileira','A arte deve evitar temas sociais','Múltiplas culturas e memórias formam o Brasil','Somente obras antigas representam patrimônio'],c:2}
+  ];
+  let qi=0,score=0,locked=false;
+  function renderQ(){locked=false;$('#qCount').textContent=`Pergunta ${qi+1} de ${quiz.length}`;$('#qScore').textContent=`${score} ponto${score===1?'':'s'}`;$('#question').textContent=quiz[qi].q;$('#answers').innerHTML='';quiz[qi].a.forEach((t,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=t;b.onclick=()=>answer(i,b);$('#answers').appendChild(b)});}
+  function answer(i,b){if(locked)return;locked=true;const correct=quiz[qi].c;$$('.answer').forEach((x,j)=>{if(j===correct)x.classList.add('correct');else if(j===i)x.classList.add('wrong');x.disabled=true});if(i===correct)score++;setTimeout(()=>{qi++;if(qi<quiz.length)renderQ();else finish()},700)}
+  function finish(){$('#quizGame').style.display='none';$('#result').style.display='block';$('#scoreFinal').textContent=`${score}/${quiz.length}`;$('#resultText').textContent=score===5?'Excelente! Você dominou o tema.':score>=3?'Muito bom. Você entendeu os pontos principais.':'Vale revisar os artistas e os tópicos centrais antes da apresentação.';}
+  $('#restart').onclick=()=>{qi=0;score=0;$('#quizGame').style.display='block';$('#result').style.display='none';renderQ()};renderQ();
+</script>
+</body>
+</html>
